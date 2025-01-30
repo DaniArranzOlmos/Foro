@@ -1,10 +1,22 @@
 /* Asegúrate de que el body ocupe toda la altura de la pantalla */
 body {
   display: flex;
-  justify-content: center;  /* Centra horizontalmente */
-  align-items: center;      /* Centra verticalmente */
-  height: 100vh;            /* Altura del viewport */
-  margin: 0;                /* Elimina el margen por defecto */
+  justify-content: center;  
+  align-items: center;      
+  height: 100vh;            
+  margin: 0;                
+  overflow: hidden; 
+}
+
+
+.grid-container {
+  display: grid;
+  grid-template-rows: auto auto; 
+  gap: 10px; 
+  justify-items: center; 
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
 }
 
 /* wrapper */
@@ -15,14 +27,17 @@ body {
   --bg-color: #fff;
   --bg-color-alt: #666;
   --main-color: #323232;
-  /* Mantén el resto del estilo como estaba */
   display: flex;
-  justify-content: center;  /* Asegura que los elementos dentro de .wrapper también estén centrados */
+  justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 20px; 
+  width: 100%;
+  max-width: 400px; 
+  box-sizing: border-box;
 }
 
-/* Resto de tu código sigue igual */
+/* Switch */
 .switch {
   transform: translateY(-200px);
   position: relative;
@@ -35,6 +50,7 @@ body {
   height: 20px;
 }
 
+/* Card Side */
 .card-side::before {
   position: absolute;
   content: 'Log in';
@@ -57,6 +73,7 @@ body {
   font-weight: 600;
 }
 
+/* Toggle */
 .toggle {
   opacity: 0;
   width: 0;
@@ -109,6 +126,7 @@ body {
   text-decoration: underline;
 }
 
+/* Flip Card */
 .flip-card__inner {
   width: 300px;
   height: 350px;
@@ -204,6 +222,8 @@ body {
   color: var(--font-color);
   cursor: pointer;
 }
+
+/* Mensajes */
 .mensaje {
   margin-top: 20px;
   text-align: center;
@@ -221,9 +241,10 @@ body {
 .error {
   color: red;
   background-color: #f8d7da;
-  padding: 10px;
+  width: 100%;
   border: 1px solid #f5c6cb;
   border-radius: 5px;
   font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
 }
-
