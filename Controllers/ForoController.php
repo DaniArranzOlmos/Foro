@@ -16,30 +16,56 @@ class ForoController {
         exit();
     }
 
-    public function crearPublicacion() {
-        session_start();
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $titulo = $_POST['titulo'] ?? '';
-            $contenido = $_POST['contenido'] ?? '';
-            $autor_id = $_SESSION['usuario_id'] ?? null;
+    
 
-            if (empty($titulo) || empty($contenido) || !$autor_id) {
-                header('Location: ../Views/main.php?mensaje=error');
+    public function añadirTema() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $tema = $_POST['tema'] ?? '';
+            $descripcion = $_POST['descripcion'] ?? '';
+            $usuarioId = $_SESSION['usuario_id'] ?? null;  // Obtiene el id del usuario desde la sesión
+    
+            if (empty($tema) || empty($descripcion) || !$usuarioId) {
+                echo json_encode(['status' => 'error', 'message' => 'Faltan datos o sesión inválida.']);
                 exit();
             }
-
+    
+            // Instanciar el modelo para insertar el tema
             $foroModel = new ForoModel();
-            $resultado = $foroModel->insertarPublicacion($titulo, $contenido, $autor_id);
-
+            $resultado = $foroModel->insertarTema($tema, $descripcion, $usuarioId);
+    
+            // Devolver respuesta en formato JSON
             if ($resultado) {
-                header('Location: ../Views/main.php?mensaje=exito');
+                echo json_encode(['status' => 'exito']);
             } else {
-                header('Location: ../Views/main.php?mensaje=error');
+                echo json_encode(['status' => 'error', 'message' => 'Error al insertar el tema']);
             }
             exit();
         }
     }
+
+    public function manejarAcciones() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['action'])) {
+                switch ($_POST['action']) {
+                    case 'add':
+                        $this->añadirTema(); // Llama a la acción de añadir tema
+                        break;
+                    case 'update':
+                       /* $this->actualizarTema(); */// Llama a la acción de actualizar tema
+                        break;
+                    case 'delete':
+                     //   $this->eliminarTema(); // Llama a la acción de eliminar tema
+                        break;
+                    default:
+                        echo json_encode(['status' => 'error', 'message' => 'Acción no reconocida']);
+                        break;
+                }
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Acción no proporcionada']);
+            }
+        }
+    }
+    
 }
 
 // Manejo de solicitudes AJAX
@@ -47,4 +73,5 @@ if (isset($_GET['accion']) && $_GET['accion'] === 'obtenerPublicaciones') {
     $controller = new ForoController();
     $controller->obtenerPublicaciones();
 }
+
 ?>

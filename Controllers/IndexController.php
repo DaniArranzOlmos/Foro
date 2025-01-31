@@ -9,36 +9,45 @@ class IndexController {
             $nombreUsuario = $_POST['nombreUsuario'];  
             $contraseña = $_POST['contraseña']; 
             $conn = Conex1::con1(); 
-
+    
             // Validar que los campos no estén vacíos
             if (empty($nombreUsuario) || empty($contraseña)) {
                 $_SESSION['error'] = 'Debes completar todos los campos.';
                 return;  // No redirigir, para mostrar el error en la misma página
             }
-
+    
             // Consultar la base de datos
             $sql = "SELECT * FROM usuarios WHERE nombre_usuario = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $nombreUsuario);
             $stmt->execute();
             $resultado = $stmt->get_result();
-
+    
             if ($resultado->num_rows > 0) {
-                $row = $resultado->fetch_assoc();
-
-                // Verificar la contraseña
-                if (password_verify($contraseña, $row['contraseña'])) {
-                    $_SESSION['usuario'] = $nombreUsuario;
-                    header('Location: Views/main.php');
-                    exit();
-                } else {
-                    $_SESSION['error'] = 'Contraseña incorrecta.';
+                // Recorremos los resultados (en este caso sólo habrá uno)
+                while ($row = $resultado->fetch_assoc()) {
+                    // Verificar la contraseña
+                    if (password_verify($contraseña, $row['contraseña'])) {
+                        // Guardamos el nombre de usuario y el id en la sesión
+                        $_SESSION['usuario'] = $nombreUsuario;
+                        $_SESSION['usuario_id'] = $row['id'];  // Aquí se toma el id del usuario
+    
+                        // Redirigir a la página principal
+                        header('Location: Views/main.php');
+                        exit();
+                    } else {
+                        // Contraseña incorrecta
+                        $_SESSION['error'] = 'Contraseña incorrecta.';
+                    }
                 }
             } else {
+                // Usuario no encontrado
                 $_SESSION['error'] = 'El usuario no existe.';
             }
         }
     }
+    
+    
 
     public function signUp() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] == 'signUp') {

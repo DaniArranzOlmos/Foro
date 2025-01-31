@@ -13,8 +13,8 @@ class ForoModel {
         try {
             $sql = "SELECT p.id, p.titulo, p.contenido, p.fecha_creacion, u.nombre_usuario AS autor
                     FROM publicaciones p
-                    JOIN usuarios u ON p.autor_id = u.id
-                    ORDER BY p.fecha_creacion DESC";
+                    LEFT JOIN usuarios u ON p.autor_id = u.id
+                    ORDER BY p.fecha_creacion DESC;";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
@@ -37,16 +37,22 @@ class ForoModel {
         }
     }
 
-    public function insertarPublicacion($titulo, $contenido, $autor_id) {
-        try {
-            $sql = "INSERT INTO publicaciones (titulo, contenido, autor_id) VALUES (?, ?, ?)";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bind_param("ssi", $titulo, $contenido, $autor_id);
-            
-            return $stmt->execute();
-        } catch (Exception $e) {
-            return false;
-        }
+
+    public function insertarTema($tema, $descripcion, $usuarioId) {
+        $conn = Conex1::con1();
+    
+        $sql = "INSERT INTO publicaciones (titulo, contenido, autor_id) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+    
+        // Asociamos los valores a los parámetros de la consulta
+        $stmt->bind_param("ssi", $tema, $descripcion, $usuarioId);
+        $resultado = $stmt->execute();
+    
+        $stmt->close();
+        $conn->close();
+    
+        return $resultado;  // Retorna verdadero si la inserción fue exitosa
     }
+    
 }
 ?>
