@@ -48,7 +48,7 @@ if (isset($_SESSION['usuario'])) {
         <div id="formPopup" class="form-popup" style="display: none;">
             <div class="form-container">
                 <span class="closeBtn">&times;</span>
-                <form action="Controllers/ForoController.php" method="POST">
+                <form method="POST">
                     <label for="tema">Tema:</label>
                     <input type="text" id="tema" name="tema" required>
 
