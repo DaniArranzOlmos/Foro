@@ -21,7 +21,7 @@ if (isset($_SESSION['usuario'])) {
 </head>
 <body>
     <nav>
-    <h1>Bienvenido, <?php echo $nombreUsuario, $usuarioId; ?></h1>
+    <h1>Bienvenido, <?php echo $nombreUsuario; ?></h1>
     <form action="../Controllers/logout.php" method="post">
     <button id="cerrarSesion" type="submit">Cerrar sesión</button>
     </form>
@@ -64,8 +64,8 @@ if (isset($_SESSION['usuario'])) {
                 </form>
             </div>
         </div>
+        <div id="mensaje" class="mensaje" style="display: none;"></div>
     </div>
-
 <script src="../Assets/motor.js"></script>
 </body>
 </html>
