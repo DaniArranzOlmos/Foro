@@ -54,32 +54,45 @@ class IndexController {
             $nombre = $_POST['nnombre'];
             $nombreUsuario = $_POST['nnombreUsuario'];
             $contraseña = $_POST['ncontraseña'];
-
+    
+            // Verificar si los campos están vacíos
             if (empty($nombre) || empty($nombreUsuario) || empty($contraseña)) {
                 $_SESSION['error'] = 'Todos los campos son obligatorios.';
                 return;  // No redirigir, para mostrar el error en la misma página
             }
-
+    
+            // Validar el nombre de usuario
+            if (!preg_match('/^[a-zA-Z0-9][a-zA-Z0-9-_\.]{9,29}$/', $nombreUsuario)) {
+                $_SESSION['error'] = 'El nombre de usuario debe tener entre 10 y 30 caracteres y no puede comenzar con un número.';
+                return;
+            }
+    
+            // Validar la contraseña
+            if (!preg_match('/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,20}$/', $contraseña)) {
+                $_SESSION['error'] = 'La contraseña debe tener entre 5 y 20 caracteres, incluyendo al menos una mayúscula y un número.';
+                return;
+            }
+    
             $conn = Conex1::con1();
-
+    
             // Verificar si el usuario ya existe
             $sql = "SELECT * FROM usuarios WHERE nombre_usuario = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $nombreUsuario);
             $stmt->execute();
             $resultado = $stmt->get_result();
-
+    
             if ($resultado->num_rows > 0) {
                 $_SESSION['error'] = 'El nombre de usuario ya está registrado.';
             } else {
                 // Cifrar la contraseña
                 $contraseñaCifrada = password_hash($contraseña, PASSWORD_DEFAULT);
-
+    
                 // Intentar insertar el usuario
                 $sql = "INSERT INTO usuarios (nombre, nombre_usuario, contraseña) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("sss", $nombre, $nombreUsuario, $contraseñaCifrada);
-
+    
                 if ($stmt->execute()) {
                     $_SESSION['message'] = 'Usuario registrado con éxito.';
                 } else {
@@ -88,6 +101,7 @@ class IndexController {
             }
         }
     }
+    
 
     public function verificarSesion() {
         if (!isset($_SESSION['usuario'])) {

@@ -21,10 +21,13 @@ if (isset($_SESSION['usuario'])) {
 </head>
 <body>
     <nav>
-    <h1>Bienvenido, <?php echo $nombreUsuario; ?></h1>
-    <form action="../Controllers/logout.php" method="post">
-    <button id="cerrarSesion" type="submit">Cerrar sesión</button>
-    </form>
+        <h1>Bienvenido, <?php echo $nombreUsuario; ?></h1>
+        <form action="perfil.php" method="get">
+            <button id="irPerfil" type="submit">Ir al Perfil</button>
+        </form>
+        <form action="../Controllers/logout.php" method="post">
+            <button id="cerrarSesion" type="submit">Cerrar sesión</button>
+        </form>
     </nav>
     <div id="main-content">
         <h2>Elige un tema</h2>        
@@ -41,7 +44,6 @@ if (isset($_SESSION['usuario'])) {
             </tbody>
         </table>
         <button class="Btn" id="openFormBtn">
-            <div class="sign">+</div>
             <div class="text">Añadir</div>
         </button>   
         
@@ -66,6 +68,7 @@ if (isset($_SESSION['usuario'])) {
         </div>
         <div id="mensaje" class="mensaje" style="display: none;"></div>
     </div>
+    
 <script src="../Assets/motor.js"></script>
 </body>
 </html>

@@ -1,14 +1,19 @@
-/* Estilo general del body */
-body {
-    font-family: Arial, sans-serif;
+/* Reset y estilo base */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
-    background-color: #f4f4f4;
+    min-height: 100vh;
+    padding-top: 50px;
 }
 
 /* Barra de navegación */
@@ -16,48 +21,62 @@ nav {
     width: 100%;
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 nav h1 {
-    margin: 0;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 #cerrarSesion {
-    padding: 5px 10px;
+    padding: 10px 15px;
     font-size: 16px;
-    color: white;
     background-color: #e74c3c;
     border: none;
+    border-radius: 5px;
+    color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+#irPerfil {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 #cerrarSesion:hover {
     background-color: #c0392b;
-    margin-left: -20px;
 }
 
 /* Contenido principal */
 #main-content {
-    margin-top: 60px; /* Deja espacio para la barra de navegación */
     width: 100%;
     max-width: 1200px;
-    padding: 20px;
+    padding: 40px 30px;
     background-color: white;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 100px; /* Deja espacio para la barra de navegación */
 }
 
 #main-content h2 {
-    font-size: 24px;
+    font-size: 32px;
     color: #333;
+    margin-bottom: 30px;
 }
 
 /* Tabla del foro */
@@ -68,40 +87,60 @@ nav h1 {
 }
 
 #tablaForo th, #tablaForo td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 15px;
     text-align: left;
+    border-bottom: 1px solid #ddd;
 }
 
 #tablaForo th {
-    background-color: #f4f4f4;
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+#tablaForo td {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+#tablaForo td:hover {
+    background-color: #f1f1f1;
+}
+
+/* Fila clicable */
+#tablaForo tr.fila-clicable {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#tablaForo tr.fila-clicable:hover {
+    background-color: #ecf0f1;  /* El color de fondo de toda la fila cambia al hacer hover */
+}
+
+#tablaForo tr.fila-clicable td {
+    transition: background-color 0.3s ease;
+}
+
+/* Asegura que el hover se aplica en las celdas también */
+#tablaForo tr.fila-clicable:hover td {
+    background-color: #ecf0f1; /* Este color se aplicará a las celdas de toda la fila cuando se pase el mouse */
 }
 
 /* Botón para abrir el formulario */
 .Btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    background-color: #2d8cf0;
+    margin-top: 30px;
+    background-color: #3498db;
     color: white;
     font-size: 18px;
-    padding: 10px 20px;
+    padding: 15px 25px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .Btn:hover {
     background-color: #2980b9;
-}
-
-.sign {
-    font-size: 30px;
-    margin-right: 10px;
-}
-
-.text {
-    font-size: 18px;
 }
 
 /* Formulario emergente */
@@ -112,17 +151,17 @@ nav h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
 }
 
 .form-container {
-    background-color: white;
-    margin: 100px auto;
-    padding: 20px;
+    background-color: #fff;
+    margin: 80px auto;
+    padding: 30px;
     border-radius: 10px;
-    width: 300px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .form-container label {
@@ -132,20 +171,22 @@ nav h1 {
 
 .form-container input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 8px;
     border: 1px solid #ddd;
+    font-size: 14px;
 }
 
 .form-container button {
     width: 100%;
-    padding: 10px;
-    background-color: #2d8cf0;
+    padding: 12px 15px;
+    background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .form-container button:hover {
@@ -154,9 +195,9 @@ nav h1 {
 
 .closeBtn {
     position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 30px;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
     color: #333;
     cursor: pointer;
 }
@@ -173,17 +214,108 @@ nav h1 {
 }
 
 .success {
-    color: green;
+    color: #27ae60;
 }
 
 .error {
-    color: red;
-}
-.fila-clicable {
-    cursor: pointer;  /* Cambia el cursor a una mano */
-    transition: background-color 0.3s ease; /* Efecto de transición */
+    color: #e74c3c;
 }
 
-.fila-clicable:hover {
-    background-color: #f0f0f0;  /* Cambia el color al pasar el mouse */
+/* Media Queries para Responsividad */
+
+/* Pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    nav h1 {
+        font-size: 20px;
+    }
+
+    #cerrarSesion {
+        margin-top: 10px;
+        width: 100%;
+    }
+    #irPerfil{
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    #main-content {
+        padding: 20px;
+        margin-top: 120px;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    #tablaForo {
+        width: 100%;
+    }
+
+    #tablaForo th, #tablaForo td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .Btn {
+        width: 100%;
+        padding: 15px 10px;
+        font-size: 16px;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .form-container label {
+        font-size: 14px;
+    }
+
+    .form-container input {
+        font-size: 12px;
+    }
+
+    .form-container button {
+        padding: 12px 10px;
+        font-size: 16px;
+    }
+}
+
+/* Pantallas muy pequeñas (móviles en orientación vertical) */
+@media (max-width: 480px) {
+    nav h1 {
+        font-size: 18px;
+    }
+
+    #cerrarSesion {
+        font-size: 14px;
+    }
+
+    #main-content h2 {
+        font-size: 24px;
+    }
+
+    #tablaForo th, #tablaForo td {
+        padding: 8px;
+    }
+
+    .Btn {
+        padding: 12px 10px;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .form-container input,
+    .form-container button {
+        font-size: 14px;
+    }
+
+    
 }
